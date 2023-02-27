@@ -1,12 +1,12 @@
 {
   "id": "punch-calendar",
   "displayName": "punch-calendar",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "打卡日历，可在日历标记圆点，配置简单，长期维护。",
   "keywords": [
     "punch-calendar"
 ],
-  "repository": "",
+  "repository": "https://github.com/LonJinUp/punch-calendar",
   "engines": {
     "HBuilderX": "^3.6.10"
   },
