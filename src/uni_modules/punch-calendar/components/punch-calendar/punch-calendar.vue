@@ -53,6 +53,8 @@
 		},
 		data() {
 			return {
+				successArr: [],
+				errorArr: [],
 				calendarConfig: {
 					week: ['日', '一', '二', '三', '四', '五', '六'],
 					nowYear: '', //当前日历 年
@@ -81,7 +83,26 @@
 				} else {
 					return '../../static/images/calendar-next-active.png';
 				}
-			}
+			},
+		},
+		
+		watch: {
+			successList: {
+				handler(val) {
+					this.successArr = JSON.parse(JSON.stringify(val))
+					this.initCalendar()
+				},
+				immediate: true,
+				deep: true,
+			},
+			errorList: {
+				handler(val) {
+					this.errorArr = JSON.parse(JSON.stringify(val))
+					this.initCalendar()
+				},
+				immediate: true,
+				deep: true,
+			},
 		},
 
 		methods: {
@@ -108,7 +129,7 @@
 				this.calendarConfig.nowYear = nowYear
 				this.calendarConfig.nowMonth = nowMonth
 				this.calendarConfig.nowDay = (nowYear == year && nowMonth == month) ? day : ''
-				this.calendarConfig.day = this.calendar(nowYear, nowMonth, this.calendarConfig.nowDay, this.calendarConfig.fold, this.successList, this.errorList)
+				this.calendarConfig.day = this.calendar(nowYear, nowMonth, this.calendarConfig.nowDay, this.calendarConfig.fold, this.successArr, this.errorArr)
 				this.calendarConfig.yearAndMonth = this.monDetail(nowYear, nowMonth)
 			},
 
@@ -156,7 +177,7 @@
 				this.calendarConfig.nowMonth = month
 				this.calendarConfig.nowDay = day
 				// 渲染日历
-				this.calendarConfig.day = this.calendar(year, month, day, this.calendarConfig.fold, this.successList, this.errorList)
+				this.calendarConfig.day = this.calendar(year, month, day, this.calendarConfig.fold, this.successArr, this.errorArr)
 				// 日历title
 				this.calendarConfig.yearAndMonth = this.monDetail(year, month)
 			},
@@ -187,10 +208,10 @@
 			 * mnow 月
 			 * dnow 日
 			 * fold 折叠状态
-			 * successList 需要打卡
-			 * errorList 异常标记
+			 * successArr 需要打卡
+			 * errorArr 异常标记
 			**/
-			calendar(ynow, mnow, dnow, fold, successList = [], errorList = []) {
+			calendar(ynow, mnow, dnow, fold, successArr = [], errorArr = []) {
 				let arr = []
 				var nlstr = new Date(ynow, mnow - 1, 1)
 				var firstday = nlstr.getDay()
@@ -248,8 +269,8 @@
 						// 处理需要打卡标记
 						if(item.year && item.month && item.day){
 							let timer = new Date(`${item.year}-${item.month}-${item.day}`).getTime().toString()
-							successList.includes(timer) && (item.tag = 'border')
-							errorList.includes(timer) && (item.tag = 'error')
+							successArr.includes(timer) && (item.tag = 'border')
+							errorArr.includes(timer) && (item.tag = 'error')
 						}
 						arr.push(item)
 						return arr

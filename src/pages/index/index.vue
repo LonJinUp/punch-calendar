@@ -8,16 +8,26 @@
 	export default {
 		data() {
 			return {
-				successList: ['1676995200000'],
+				successList: ['1676995200000',],
 				errorList: ['1676908800000'],
+				
 			}
 		},
 		onLoad() {
 			this.$refs.calendar.initCalendar()
+			
+			// 模拟异步赋值
+			let timer = setTimeout(()=>{
+				this.addTimer()
+			},2000)
 		},
 		methods: {
 			chooseDay(val) {
 				console.log(val)
+			},
+			
+			addTimer() {
+				this.successList = [...this.successList, '1678204800000']
 			}
 		}
 	}
