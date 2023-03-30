@@ -20,6 +20,11 @@
 			let timer = setTimeout(()=>{
 				this.addTimer()
 			},2000)
+			
+			
+			let timer2 = setTimeout(()=>{
+				this.successList = [...this.successList, '1672761600000']
+			},8000)
 		},
 		methods: {
 			chooseDay(val) {

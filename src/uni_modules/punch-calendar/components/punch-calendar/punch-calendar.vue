@@ -90,7 +90,7 @@
 			successList: {
 				handler(val) {
 					this.successArr = JSON.parse(JSON.stringify(val))
-					this.initCalendar()
+					this.initCalendar(false)
 				},
 				immediate: true,
 				deep: true,
@@ -98,7 +98,7 @@
 			errorList: {
 				handler(val) {
 					this.errorArr = JSON.parse(JSON.stringify(val))
-					this.initCalendar()
+					this.initCalendar(false)
 				},
 				immediate: true,
 				deep: true,
@@ -171,15 +171,19 @@
 			},
 
 			// 初始化
-			initCalendar() {
-				const { year, month, day } = this.getNowDate()
-				this.calendarConfig.nowYear = year
-				this.calendarConfig.nowMonth = month
-				this.calendarConfig.nowDay = day
+			initCalendar(nowDate = true) {
+				if(nowDate) {
+					const { year, month, day } = this.getNowDate()
+					this.calendarConfig.nowYear = year
+					this.calendarConfig.nowMonth = month
+					this.calendarConfig.nowDay = day
+				}
+				const {nowYear, nowMonth, nowDay} = this.calendarConfig
+				
 				// 渲染日历
-				this.calendarConfig.day = this.calendar(year, month, day, this.calendarConfig.fold, this.successArr, this.errorArr)
+				this.calendarConfig.day = this.calendar(nowYear, nowMonth, nowDay, this.calendarConfig.fold, this.successArr, this.errorArr)
 				// 日历title
-				this.calendarConfig.yearAndMonth = this.monDetail(year, month)
+				this.calendarConfig.yearAndMonth = this.monDetail(nowYear, nowMonth)
 			},
 			
 			// 获取当前年月日

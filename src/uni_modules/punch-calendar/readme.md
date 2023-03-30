@@ -13,21 +13,28 @@ demo:
 </template>
 
 <script>
-	export default {
-		data() {
-			return {
-				successList: ['1676995200000'],
-				errorList: ['1676908800000'],
-			}
+	data() {
+		return {
+			successList: ['1676995200000',],
+			errorList: ['1676908800000'],
+			
+		}
+	},
+	onLoad() {
+		this.$refs.calendar.initCalendar()
+		
+		// 模拟异步赋值
+		let timer = setTimeout(()=>{
+			this.addTimer()
+		},2000)
+	},
+	methods: {
+		chooseDay(val) {
+			console.log(val)
 		},
-		onLoad() {
-			// 初始化必须执行该函数
-			this.$refs.calendar.initCalendar()
-		},
-		methods: {
-			chooseDay(val) {
-				console.log(val)
-			}
+		
+		addTimer() {
+			this.successList = [...this.successList, '1678204800000']
 		}
 	}
 </script>
@@ -47,4 +54,6 @@ demo:
 | 方法名称   | 说明                 | 返回值                       |
 | ---------- | -------------------- | ---------------------------- |
 | @chooseDay | 点击某日时候执行函数 | 返回一个对象，包含年、月、日 |
+
+
 
